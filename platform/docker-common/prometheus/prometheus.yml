@@ -12,4 +12,13 @@ scrape_configs:
     metrics_path: '/prometheus'
 
     target_groups:
-     - targets: ['web:8080']
+     - targets: ['order-service:8080']
+
+  - job_name: 'client-service'
+
+      scrape_interval: 5s
+      scrape_timeout: 10s
+      metrics_path: '/prometheus'
+
+      target_groups:
+       - targets: ['client-service:8080']
