@@ -1,0 +1,49 @@
+# Docker Schema ref: https://github.com/aanand/compose-file/blob/master/schema/data/config_schema_v3.0.json
+# Difference: https://docs.docker.com/compose/compose-file/compose-versioning/#version-21
+# How-to swarm cluster: https://codefresh.io/blog/deploy-docker-compose-v3-swarm-mode-cluster/
+
+version: '3'
+services:
+
+  zipkin-server:
+    image: drip-cloud/zipkin-server
+    container_name: zipkin-server
+    ports:
+     - "9411:9411"
+
+
+  admin-ui:
+    image: drip-cloud/admin-service
+    container_name: admin-ui
+    ports:
+     - "7070:7070"
+
+
+  auth-service:
+    image: drip-cloud/auth-service
+    container_name: auth-service
+    ports:
+     - "9991:9991"
+    #environment:
+     #- SPRING_PROFILES_ACTIVE=production
+
+
+  config-service:
+    image: drip-cloud/config-service
+    container_name: config-service
+    ports:
+     - "8888:8888"
+    #environment:
+     #- SPRING_PROFILES_ACTIVE=production
+
+
+  gateway-service:
+    image: drip-cloud/gateway-service
+    container_name: gateway-service
+    ports:
+     - "8080:8080"
+    #environment:
+     #- SPRING_PROFILES_ACTIVE=production
+
+
+

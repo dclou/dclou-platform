@@ -1,0 +1,27 @@
+server:
+  port: 8180
+spring:
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  datasource:
+    url: jdbc:h2:file:./target/h2db/db/events;DB_CLOSE_DELAY=-1
+    username: events
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: notifications
+          content-type: application/json
+security:
+  oauth2:
+    resource:
+      jwt:
+        keyValue: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnXAnwPOR4iFT2Sff8HvNl3Hu8w7+ffk/Fem6SyUeEI0J2URaciZO394y0dCPG6+W6yJQ867Ilus4EnHgz4+IHmOf0hX9Jf6ITPGaCrW+UCQAm9ELrLfJXiZPN2hraKAn6lErDoDsVTcO1NHfU3TnkpgMDaz6IrUUTU9tz0LtJCvTT+ic5TRataX3VxQpT0klos0vJpvrn0wgY5F8qLmBkW6QGVnWD08hxQfMc0IcINQqLyI9IOcqIPIPA3ikNqRKoDxTl1moJpI+oywwr8eMlARdrR9mD3HzHAfio5+pnNSIC9SmEdhXeHIuSPtYTiVwwqhk8+E+tOQaCa59YBN/DwIDAQAB
+          -----END PUBLIC KEY-----

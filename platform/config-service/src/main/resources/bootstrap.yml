@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+          server:
+            #git:
+              #uri: file://Users/abv/config
+              #uri: classpath:/shared
+            native:
+              searchLocations: classpath:/shared
+  profiles:
+     active: native
+
+server:
+  port: 8888
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
+  instance:
+      lease-expiration-duration-in-seconds: 60
+      lease-renewal-interval-in-seconds: 30
+
+management.security.enabled: false
+    
+# http://cloud.spring.io/spring-cloud-config/spring-cloud-config.html#_spring_cloud_config_server

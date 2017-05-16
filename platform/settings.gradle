@@ -1,0 +1,16 @@
+rootProject.name = 'drip-cloud'
+
+// http://stackoverflow.com/questions/37147407/canonical-setup-of-gradle-build
+buildCache {
+	local {
+		directory = "${settingsDir}/.gradle/build-cache"
+	}
+}
+
+include 'config-service',
+		'admin-service',
+		'auth-service',
+		'gateway-service',
+		'discovery-service',
+		'zipkin-server',
+		'sleuth-service'

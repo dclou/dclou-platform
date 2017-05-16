@@ -1,0 +1,111 @@
+# Docker Schema ref: https://github.com/aanand/compose-file/blob/master/schema/data/config_schema_v3.0.json
+# Difference: https://docs.docker.com/compose/compose-file/compose-versioning/#version-21
+# How-to swarm cluster: https://codefresh.io/blog/deploy-docker-compose-v3-swarm-mode-cluster/
+
+version: '3'
+volumes:
+  data-mongo:
+    external:
+      name: data-mongo
+  data-prometheus:
+    external:
+      name: data-prometheus
+  data-grafana:
+    external:
+      name: data-grafana
+  data-grafana:
+      external:
+        name: data-grafana
+  data-logging:
+    external:
+      name: data-logging
+  data-elasticsearch:
+      external:
+        name: data-elasticsearch
+
+services:
+
+  discovery-service:
+    image: drip-cloud/discovery-service
+    container_name: discovery-service
+
+    depends_on: # https://docs.docker.com/compose/startup-order/
+      - rabbit-mon
+
+    ports:
+     - "8761:8761"
+    links:
+     - fluentd
+
+  rabbit-mon:
+    image: rabbitmq:3.6.9-management
+    container_name: rabbit-mon
+    ports:
+        - "5671:5671"
+        - "5672:5672"
+        - "15672:15672"
+    hostname: rabbit-mon
+    volumes:
+        - "./docker-rabbitmq/share/:/opt/"
+    environment:
+        #- TZ=Europe/Moscow
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=admin
+        - RABBITMQ_DEFAULT_VHOST=rabbit-mon
+    healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:15672"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+
+  db:
+    image: mongo
+    container_name: db
+    volumes:
+      - data-mongo:/data/db
+
+  prometheus:
+    build: ./docker-common/prometheus
+    image: prometheus
+    container_name: prometheus
+    volumes:
+      - data-prometheus:/prometheus
+    ports:
+     - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+     - data-grafana:/var/lib/grafana
+    ports:
+     - "3000:3000"
+    links:
+     - prometheus
+
+  fluentd:
+      build: ./docker-common/fluentd
+      image: fluentd
+      container_name: fluentd
+      volumes:
+       - data-logging:/fluentd/log
+      ports:
+       - "24224:24224"
+      links:
+       - elasticsearch
+
+  elasticsearch:
+    image: elasticsearch
+    container_name: elasticsearch
+    volumes:
+      - data-elasticsearch:/usr/share/elasticsearch/data
+
+  kibana:
+    image: kibana
+    container_name: kibana
+    ports:
+     - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
+    links:
+     - elasticsearch

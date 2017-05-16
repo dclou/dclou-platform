@@ -1,0 +1,23 @@
+server:
+  port: 8980
+  use-forward-headers: true
+spring:
+  datasource:
+    url: jdbc:h2:file:./target/h2db/db/auth;DB_CLOSE_DELAY=-1
+    username: auth
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+auth:
+  oauth2:
+    certFilePath: classpath:bblmsacert.jks
+    certPassword: sopra*
+    clients:
+      - id: bblmsa
+        secret: bblmsasecret
+        authorizedGrantTypes:
+          - password
+          - refresh_token
+        scopes:
+          - openid

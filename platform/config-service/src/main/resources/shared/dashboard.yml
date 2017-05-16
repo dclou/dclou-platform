@@ -1,0 +1,8 @@
+server:
+  port: 6161
+turbine:
+  stream:
+    port: 8989
+  appConfig: notification-service,event-service,profile-service
+  clusterNameExpression: new String("default")
+  combineHostPort: true

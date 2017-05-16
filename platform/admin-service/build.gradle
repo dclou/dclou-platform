@@ -1,0 +1,8 @@
+dependencies {
+    compile group: 'de.codecentric', name: 'spring-boot-admin-server', version:'1.5.0'
+    compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui', version:'1.5.0'
+    compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui-hystrix', version:'1.5.0'
+    //compile group: 'de.codecentric', name: 'spring-boot-admin-server-ui-turbine', version:'1.5.0'
+
+
+}

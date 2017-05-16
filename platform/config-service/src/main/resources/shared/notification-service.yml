@@ -1,0 +1,32 @@
+server:
+  port: 8380
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: demobblmsa@gmail.com
+    password: demobblmsa31
+    properties:
+      mail.smtp.starttls.enable: true
+      mail.smtp.auth: true
+      mail.smtp.ssl.trust: smtp.gmail.com
+    tls: true
+    auth: true
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  cloud:
+      stream:
+        bindings:
+          input:
+            destination: notifications
+            group: notifications-group
+            durableSubscription: true
+security:
+  oauth2:
+    resource:
+      jwt:
+        keyValue: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnXAnwPOR4iFT2Sff8HvNl3Hu8w7+ffk/Fem6SyUeEI0J2URaciZO394y0dCPG6+W6yJQ867Ilus4EnHgz4+IHmOf0hX9Jf6ITPGaCrW+UCQAm9ELrLfJXiZPN2hraKAn6lErDoDsVTcO1NHfU3TnkpgMDaz6IrUUTU9tz0LtJCvTT+ic5TRataX3VxQpT0klos0vJpvrn0wgY5F8qLmBkW6QGVnWD08hxQfMc0IcINQqLyI9IOcqIPIPA3ikNqRKoDxTl1moJpI+oywwr8eMlARdrR9mD3HzHAfio5+pnNSIC9SmEdhXeHIuSPtYTiVwwqhk8+E+tOQaCa59YBN/DwIDAQAB
+          -----END PUBLIC KEY-----

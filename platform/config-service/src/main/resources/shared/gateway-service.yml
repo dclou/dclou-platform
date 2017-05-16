@@ -1,0 +1,37 @@
+server:
+  port: 8080
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 5000
+zuul:
+  ignoredServices: '*'
+  routes:
+    event-service:
+      path: /event-service/**
+      sensitiveHeaders:
+    notification-service:
+      path: /notification-service/**
+      sensitiveHeaders:
+    profile-service:
+      path: /profile-service/**
+      sensitiveHeaders:
+    auth-service:
+      path: /auth-service/**
+      sensitiveHeaders:
+  add-proxy-headers: true
+security:
+  ignored: /auth-service/oauth/**,/profile-service/**
+  basic:
+    enabled: false
+  oauth2:
+    resource:
+      jwt:
+        keyValue: |
+          -----BEGIN PUBLIC KEY-----
+          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnXAnwPOR4iFT2Sff8HvNl3Hu8w7+ffk/Fem6SyUeEI0J2URaciZO394y0dCPG6+W6yJQ867Ilus4EnHgz4+IHmOf0hX9Jf6ITPGaCrW+UCQAm9ELrLfJXiZPN2hraKAn6lErDoDsVTcO1NHfU3TnkpgMDaz6IrUUTU9tz0LtJCvTT+ic5TRataX3VxQpT0klos0vJpvrn0wgY5F8qLmBkW6QGVnWD08hxQfMc0IcINQqLyI9IOcqIPIPA3ikNqRKoDxTl1moJpI+oywwr8eMlARdrR9mD3HzHAfio5+pnNSIC9SmEdhXeHIuSPtYTiVwwqhk8+E+tOQaCa59YBN/DwIDAQAB
+          -----END PUBLIC KEY-----

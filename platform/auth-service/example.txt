@@ -1,0 +1,1 @@
+https://github.com/spring-cloud-samples/authserver/blob/master/src/main/java/demo/AuthserverApplication.java

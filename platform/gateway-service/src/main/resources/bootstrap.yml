@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    config:
+      uri: http://config-service:8888
+      failFast: false
+      retry:
+        initialInterval: 3000
+        maxAttempts: 100
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    healthcheck:
+          enabled: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
+  instance:
+      lease-expiration-duration-in-seconds: 60
+      lease-renewal-interval-in-seconds: 30
+
+management.security.enabled: false

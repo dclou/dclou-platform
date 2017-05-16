@@ -1,0 +1,29 @@
+# DOCS http://codecentric.github.io/spring-boot-admin/1.5.0/#_hystrix_ui_module
+
+server:
+  port: ${PORT:7070}
+
+security:
+  basic:
+    enabled: false
+    
+info:
+  version: 1.5.0
+
+spring:
+  boot.admin.routes.endpoints: env,metrics,trace,dump,jolokia,info,configprops,trace,logfile,refresh,flyway,liquibase,heapdump,loggers,auditevents,hystrix.stream
+  application:
+    name:
+      admin-service
+
+eureka:
+  instance:
+    hostname: admin-service
+    prefer-ip-address: true
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+       defaultZone: http://discovery-service:8761/eureka/
+
+management.security.enabled: false

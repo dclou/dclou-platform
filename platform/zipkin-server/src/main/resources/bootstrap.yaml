@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: zipkin-server
+#  cloud:
+#    stream:
+#      kafka:
+#        binder:
+#          zkNodes: ${kafka.binder.brokers}
+#          defaultBrokerPort: ${kafka.binder.defaultBrokerPort}
+#          brokers: ${kafka.binder.zkNodes}
+#          defaultZkPort: ${kafka.binder.defaultZkPort}
+#          headers:
+#            - X-B3-TraceId
+#            - X-B3-SpanId
+#            - X-B3-Sampled
+#            - X-B3-ParentSpanId
+#            - X-Span-Name
+#            - X-Process-Id
+# sleuth async messaging
+  rabbitmq:
+    addresses: rabbit-mon
+    username: admin
+    password: admin
+    virtual-host: rabbit-mon
+
+sleuth:
+   # not use sleuth stream to trace zipkin server itself
+    enabled: false
+    #refer to org.springframework.cloud.sleuth.instrument.hystrix.SleuthHystrixAutoConfiguration.java
+    hystrix:
+      strategy:
+        enabled: false
+
+zipkin:
+  storage:
+    type: mem #mysql #mem
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    healthcheck:
+          enabled: true
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
+  instance:
+      hostname: micro01-service
+      prefer-ip-address: true
+      lease-expiration-duration-in-seconds: 60
+      lease-renewal-interval-in-seconds: 30
+
+# Give the application a PORT default (ignored by PCF, will deploy on 80)
+server.port: 9411
+
+# Turn off the basic endpoint security (helps with [Registry]
+security.basic.enabled: false
+management.security.enabled: false

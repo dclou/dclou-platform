@@ -1,0 +1,10 @@
+server:
+  port: 9991
+  contextPath: /auth
+
+security:
+  user:
+    password: password
+  sessions: IF_REQUIRED
+  basic:
+    enabled: false

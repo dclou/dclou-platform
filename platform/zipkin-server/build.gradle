@@ -1,0 +1,8 @@
+
+dependencies {
+	compile('org.springframework.cloud:spring-cloud-stream-binder-rabbit') // Add [Zipkin] [Sleuth] RabbitMQ Stream Binder.
+	compile('org.springframework.cloud:spring-cloud-sleuth-zipkin-stream') // Add [Zipkin] [Sleuth] Stream.
+	compile('org.springframework.cloud:spring-cloud-starter-sleuth') // Add [Sleuth] tracing.
+	runtime('io.zipkin.java:zipkin-autoconfigure-ui') // Add [Zipkin] UI.
+
+}

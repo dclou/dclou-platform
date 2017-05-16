@@ -1,0 +1,6 @@
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-starter-freemarker')
+	compile('org.springframework.security.oauth:spring-security-oauth2')
+	compile('org.springframework.security:spring-security-jwt')
+}
